@@ -21,13 +21,15 @@ export async function signOut() {
   redirect("/login");
 }
 
-// Saves the display name in the user's Supabase Auth metadata.
-export async function updateDisplayName(displayName) {
-  const name = String(displayName || "").trim();
-  if (!name) return { error: "Display name cannot be empty." };
+// Saves the full name and display name in the user's Supabase Auth metadata.
+export async function updateProfile({ fullName, displayName }) {
+  const full = String(fullName || "").trim();
+  const display = String(displayName || "").trim();
+  if (!full) return { error: "Full name cannot be empty." };
+  if (!display) return { error: "Display name cannot be empty." };
 
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.updateUser({ data: { display_name: name } });
-  if (error) return { error: "Could not save the display name. Please try again." };
-  return { name };
+  const { error } = await supabase.auth.updateUser({ data: { full_name: full, display_name: display } });
+  if (error) return { error: "Could not save your profile. Please try again." };
+  return { fullName: full, displayName: display };
 }

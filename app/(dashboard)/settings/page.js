@@ -4,35 +4,44 @@ import { useState, useTransition } from "react";
 import { LogOut, Mail, Pencil, ShieldCheck, UserRound } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import { useCurrentUser } from "@/components/layout/user-context";
-import { signOut, updateDisplayName } from "@/app/auth-actions";
+import { signOut, updateProfile } from "@/app/auth-actions";
 
-// Shows the signed-in user's profile from Supabase Auth, saves the display name and logs out.
+// Shows the signed-in user's profile from Supabase Auth, saves name changes and logs out.
 export default function SettingsPage() {
   const user = useCurrentUser();
+  const [fullName, setFullName] = useState(user?.full_name || "");
   const [displayName, setDisplayName] = useState(user?.display_name || "");
-  const [draftName, setDraftName] = useState(user?.display_name || "");
+  const [draft, setDraft] = useState({ fullName: "", displayName: "" });
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
+
+  function startEditing() {
+    setMessage("");
+    setError("");
+    setDraft({ fullName, displayName });
+    setIsEditing(true);
+  }
 
   function handleSave(event) {
     event.preventDefault();
     setMessage("");
     setError("");
     startTransition(async () => {
-      const result = await updateDisplayName(draftName);
+      const result = await updateProfile(draft);
       if (result.error) {
         setError(result.error);
         return;
       }
-      setDisplayName(result.name);
+      setFullName(result.fullName);
+      setDisplayName(result.displayName);
       setIsEditing(false);
-      setMessage("Display name updated.");
+      setMessage("Profile updated.");
     });
   }
 
-  const initial = (displayName || user?.email || "?").trim().charAt(0).toUpperCase();
+  const initial = (displayName || fullName || user?.email || "?").trim().charAt(0).toUpperCase();
 
   return (
     <>
@@ -71,12 +80,7 @@ export default function SettingsPage() {
               {!isEditing ? (
                 <button
                   type="button"
-                  onClick={() => {
-                    setMessage("");
-                    setError("");
-                    setDraftName(displayName);
-                    setIsEditing(true);
-                  }}
+                  onClick={startEditing}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
                 >
                   <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
@@ -89,19 +93,17 @@ export default function SettingsPage() {
               <div className="flex items-start gap-3 py-3">
                 <UserRound className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
                 <div className="min-w-0 flex-1">
+                  <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">Full name</dt>
+                  <dd className="mt-0.5 break-words text-slate-900">{fullName || "Not set"}</dd>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 py-3">
+                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
+                <div className="min-w-0 flex-1">
                   <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">Display name</dt>
                   <dd className="mt-0.5 break-words text-slate-900">{displayName || "Not set"}</dd>
                 </div>
               </div>
-              {user?.full_name ? (
-                <div className="flex items-start gap-3 py-3">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
-                  <div className="min-w-0 flex-1">
-                    <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">Full name</dt>
-                    <dd className="mt-0.5 break-words text-slate-900">{user.full_name}</dd>
-                  </div>
-                </div>
-              ) : null}
               <div className="flex items-start gap-3 py-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
                 <div className="min-w-0 flex-1">
@@ -112,20 +114,34 @@ export default function SettingsPage() {
             </dl>
 
             {isEditing ? (
-              <form onSubmit={handleSave} noValidate className="mt-5 flex flex-col gap-3 rounded-xl bg-slate-50 p-4 sm:flex-row sm:items-end">
-                <div className="flex flex-1 flex-col gap-1.5">
-                  <label htmlFor="display-name" className="text-sm font-medium text-slate-700">
-                    New display name
-                  </label>
-                  <input
-                    id="display-name"
-                    placeholder="Enter a display name"
-                    value={draftName}
-                    onChange={(event) => setDraftName(event.target.value)}
-                    className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
-                  />
+              <form onSubmit={handleSave} noValidate className="mt-5 flex flex-col gap-4 rounded-xl bg-slate-50 p-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="full-name" className="text-sm font-medium text-slate-700">
+                      Full name
+                    </label>
+                    <input
+                      id="full-name"
+                      placeholder="Enter your full name"
+                      value={draft.fullName}
+                      onChange={(event) => setDraft({ ...draft, fullName: event.target.value })}
+                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="display-name" className="text-sm font-medium text-slate-700">
+                      Display name
+                    </label>
+                    <input
+                      id="display-name"
+                      placeholder="Shown in greetings"
+                      value={draft.displayName}
+                      onChange={(event) => setDraft({ ...draft, displayName: event.target.value })}
+                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                    />
+                  </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 self-end">
                   <button
                     type="submit"
                     disabled={isPending}
@@ -135,10 +151,7 @@ export default function SettingsPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      setDraftName(displayName);
-                      setIsEditing(false);
-                    }}
+                    onClick={() => setIsEditing(false)}
                     className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
                   >
                     Cancel
