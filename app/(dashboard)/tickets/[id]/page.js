@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { Pencil } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import StatusBadge from "@/components/tickets/status-badge";
@@ -12,8 +14,28 @@ import { formatDate } from "@/components/tickets/ticket-table";
 import { getTicketOnServer, listUpdatesOnServer } from "@/lib/tickets-server";
 
 
+// Placeholder shown while the ticket loads.
+function TicketSkeleton() {
+  return (
+    <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8" aria-busy="true">
+      <div className="h-12 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+      <div className="h-96 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+    </main>
+  );
+}
+
 // In Next.js 16, dynamic route params arrive as a Promise, so they must be awaited.
-export default async function TicketDetailsPage({ params }) {
+export default function TicketDetailsPage({ params }) {
+  return (
+    <Suspense fallback={<TicketSkeleton />}>
+      <TicketContent params={params} />
+    </Suspense>
+  );
+}
+
+// Reads the signed-in ticket on each request, so Next.js must not prerender this part.
+async function TicketContent({ params }) {
+  await connection();
   const { id } = await params;
   const ticket = await getTicketOnServer(id);
 
