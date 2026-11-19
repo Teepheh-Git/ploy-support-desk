@@ -30,9 +30,9 @@ export default function MobileNav() {
       </button>
 
       {isOpen ? (
-        <div className="fixed inset-0 z-50 flex">
+        <div className="fixed inset-0 z-50">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[1px]" onClick={() => setIsOpen(false)} />
-          <aside className="relative z-10 h-full w-72 max-w-[85vw] bg-white shadow-xl">
+          <aside className="fixed inset-y-0 left-0 z-10 flex h-dvh w-72 max-w-[85vw] flex-col overflow-y-auto bg-white shadow-xl">
             <button
               type="button"
               onClick={() => setIsOpen(false)}
