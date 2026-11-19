@@ -28,10 +28,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-blue-50/70 via-white to-white px-4 py-10">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-violet-50/70 via-white to-white px-4 py-10">
       <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5 sm:p-8">
         <div className="mb-6 flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/30">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-600 text-white shadow-md shadow-violet-600/30">
             <LifeBuoy className="h-6 w-6" aria-hidden="true" />
           </div>
           <h1 className="text-xl font-semibold text-slate-900">Ploy Support Desk</h1>
@@ -53,7 +53,7 @@ export default function LoginPage() {
               onChange={(event) => setEmail(event.target.value)}
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby={errors.email ? "email-error" : undefined}
-              className="rounded-lg border border-slate-300 px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+              className="rounded-lg border border-slate-300 px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
             />
             {errors.email ? (
               <p id="email-error" className="text-xs text-rose-600">
@@ -77,7 +77,7 @@ export default function LoginPage() {
                 onChange={(event) => setPassword(event.target.value)}
                 aria-invalid={errors.password ? "true" : "false"}
                 aria-describedby={errors.password ? "password-error" : undefined}
-                className="w-full rounded-lg border border-slate-300 py-2 pl-3 pr-10 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                className="w-full rounded-lg border border-slate-300 py-2 pl-3 pr-10 text-sm focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
               />
               <button
                 type="button"
@@ -108,7 +108,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="mt-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:opacity-60"
+            className="mt-2 rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 disabled:opacity-60"
           >
             {isPending ? "Signing in..." : "Log In"}
           </button>

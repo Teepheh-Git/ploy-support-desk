@@ -39,7 +39,7 @@ export default function Sidebar({ onNavigate }) {
     <div className="flex h-full flex-col">
       {/* Brand */}
       <div className="flex items-center gap-3 px-5 pb-6 pt-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-600 text-white shadow-md shadow-violet-600/25">
           <LifeBuoy className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="min-w-0">
@@ -64,9 +64,9 @@ export default function Sidebar({ onNavigate }) {
               href={href}
               onClick={onNavigate}
               aria-current={isActive ? "page" : undefined}
-              className={`group relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+              className={`group relative flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 ${
                 isActive
-                  ? "bg-blue-600 text-white shadow-sm shadow-blue-600/20"
+                  ? "bg-violet-600 text-white shadow-sm shadow-violet-600/20"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >

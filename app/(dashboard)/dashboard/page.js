@@ -18,7 +18,7 @@ export default function DashboardPage() {
         action={
           <Link
             href="/tickets/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700"
+            className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700"
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">Create Ticket</span>
@@ -67,7 +67,7 @@ async function DashboardContent() {
 
   const segments = [
     { label: "Open", count: open, bar: "bg-amber-400", dot: "bg-amber-400" },
-    { label: "In Progress", count: inProgress, bar: "bg-blue-500", dot: "bg-blue-500" },
+    { label: "In Progress", count: inProgress, bar: "bg-violet-500", dot: "bg-violet-500" },
     { label: "Resolved", count: resolved, bar: "bg-emerald-500", dot: "bg-emerald-500" },
   ];
 
@@ -76,7 +76,7 @@ async function DashboardContent() {
         <section className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:grid-cols-5">
           <div className="flex flex-col justify-between gap-4 lg:col-span-2">
             <div>
-              <p className="text-sm font-medium text-blue-600">Welcome back{user?.display_name ? `, ${user.display_name}` : ""}</p>
+              <p className="text-sm font-medium text-violet-600">Welcome back{user?.display_name ? `, ${user.display_name}` : ""}</p>
               <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">
                 {open === 0 ? "No open tickets right now" : `${open} open ${open === 1 ? "ticket" : "tickets"} to review`}
               </h2>
@@ -86,7 +86,7 @@ async function DashboardContent() {
             </div>
             <Link
               href="/tickets"
-              className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+              className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700"
             >
               View all tickets
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -128,7 +128,7 @@ async function DashboardContent() {
               <h2 className="text-base font-semibold text-slate-900">Recent Tickets</h2>
               <p className="text-sm text-slate-500">The five latest complaints.</p>
             </div>
-            <Link href="/tickets" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+            <Link href="/tickets" className="text-sm font-medium text-violet-600 hover:text-violet-800">
               See all
             </Link>
           </div>

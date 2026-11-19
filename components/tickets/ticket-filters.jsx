@@ -21,7 +21,7 @@ export default function TicketFilters({ filters, onChange }) {
           placeholder="Search by ticket number, customer or subject"
           value={filters.search}
           onChange={(event) => update("search", event.target.value)}
-          className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+          className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
         />
       </div>
 

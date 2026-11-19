@@ -50,7 +50,7 @@ export default function AddUpdateForm({ ticket }) {
           value={note}
           onChange={(event) => setNote(event.target.value)}
           placeholder="Write what happened or what you did next"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+          className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
         />
       </div>
 
@@ -64,7 +64,7 @@ export default function AddUpdateForm({ ticket }) {
       {error ? <p className="text-xs text-rose-600">{error}</p> : null}
       {message ? <p role="status" className="text-xs text-emerald-700">{message}</p> : null}
 
-      <button type="submit" disabled={isSaving} className="self-start rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:opacity-60">
+      <button type="submit" disabled={isSaving} className="self-start rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 disabled:opacity-60">
         {isSaving ? "Saving..." : "Save Update"}
       </button>
     </form>

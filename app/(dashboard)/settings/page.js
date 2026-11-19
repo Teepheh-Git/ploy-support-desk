@@ -59,7 +59,7 @@ export default function SettingsPage() {
         ) : null}
 
         <section aria-labelledby="profile-heading" className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-600 to-indigo-600 p-5 text-white sm:flex-row sm:items-center sm:p-6">
+          <div className="flex flex-col gap-4 bg-gradient-to-r from-violet-600 to-purple-600 p-5 text-white sm:flex-row sm:items-center sm:p-6">
             <div
               aria-hidden="true"
               className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/20 text-xl font-semibold ring-2 ring-white/40"
@@ -67,7 +67,7 @@ export default function SettingsPage() {
               {initial}
             </div>
             <div className="min-w-0">
-              <p className="text-sm text-blue-100">Signed in as</p>
+              <p className="text-sm text-violet-100">Signed in as</p>
               <p className="truncate text-base font-semibold">{displayName || user?.email}</p>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function SettingsPage() {
                       placeholder="Enter your full name"
                       value={draft.fullName}
                       onChange={(event) => setDraft({ ...draft, fullName: event.target.value })}
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -137,7 +137,7 @@ export default function SettingsPage() {
                       placeholder="Shown in greetings"
                       value={draft.displayName}
                       onChange={(event) => setDraft({ ...draft, displayName: event.target.value })}
-                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
                     />
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function SettingsPage() {
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:opacity-60"
+                    className="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 disabled:opacity-60"
                   >
                     {isPending ? "Saving..." : "Save"}
                   </button>

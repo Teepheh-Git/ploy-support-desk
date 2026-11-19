@@ -1,7 +1,7 @@
 // One statistic card. Used on the dashboard and reports pages.
 export default function StatCard({ label, value, icon: Icon, tone = "blue", hint }) {
   const tones = {
-    blue: "bg-blue-50 text-blue-600",
+    blue: "bg-violet-50 text-violet-600",
     amber: "bg-amber-50 text-amber-600",
     emerald: "bg-emerald-50 text-emerald-600",
     slate: "bg-slate-100 text-slate-600",

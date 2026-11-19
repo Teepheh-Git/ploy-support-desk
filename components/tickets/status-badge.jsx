@@ -1,7 +1,7 @@
 // Coloured badge for a ticket status. Colours are kept to a minimum so
 // the table stays easy to scan.
 const STATUS_STYLES = {
-  Open: "bg-blue-50 text-blue-700 ring-blue-200",
+  Open: "bg-violet-50 text-violet-700 ring-violet-200",
   "In Progress": "bg-amber-50 text-amber-700 ring-amber-200",
   Resolved: "bg-emerald-50 text-emerald-700 ring-emerald-200",
 };

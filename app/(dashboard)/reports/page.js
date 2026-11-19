@@ -7,7 +7,7 @@ import { listTicketsOnServer } from "@/lib/tickets-server";
 // Dot colours for each status, so the bars read at a glance.
 const STATUS_DOT = {
   Open: "bg-amber-500",
-  "In Progress": "bg-blue-500",
+  "In Progress": "bg-violet-500",
   Resolved: "bg-emerald-500",
 };
 
@@ -72,7 +72,7 @@ export default async function ReportsPage() {
                       aria-valuemax={100}
                       aria-valuenow={share}
                     >
-                      <div className="h-full rounded-full bg-blue-600 transition-all" style={{ width: `${share}%` }} />
+                      <div className="h-full rounded-full bg-violet-600 transition-all" style={{ width: `${share}%` }} />
                     </div>
                   </div>
                 );

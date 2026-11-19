@@ -70,7 +70,7 @@ export default function TicketForm({ ticketId, initialValues, cancelHref, submit
   }
 
   const inputClass =
-    "w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100";
+    "w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100";
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-8">
@@ -124,7 +124,7 @@ export default function TicketForm({ ticketId, initialValues, cancelHref, submit
         <Link href={cancelHref} className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
           Cancel
         </Link>
-        <button type="submit" disabled={isSaving} className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:opacity-60">
+        <button type="submit" disabled={isSaving} className="rounded-lg bg-violet-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 disabled:opacity-60">
           {isSaving ? "Saving..." : submitLabel}
         </button>
       </div>

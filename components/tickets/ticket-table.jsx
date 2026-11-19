@@ -29,7 +29,7 @@ export default function TicketTable({ tickets, showCategory = false }) {
             </div>
             <Link
               href={`/tickets/${ticket.id}`}
-              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-lg bg-blue-50 px-3 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-lg bg-violet-50 px-3 text-sm font-medium text-violet-700 transition-colors hover:bg-violet-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
             >
               <Eye className="h-4 w-4" aria-hidden="true" />
               View
@@ -83,7 +83,7 @@ export default function TicketTable({ tickets, showCategory = false }) {
               <td className="px-4 py-3">
                 <Link
                   href={`/tickets/${ticket.id}`}
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-blue-50 px-3 font-medium text-blue-700 transition-colors hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-violet-50 px-3 font-medium text-violet-700 transition-colors hover:bg-violet-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600"
                 >
                   <Eye className="h-4 w-4" aria-hidden="true" />
                   View

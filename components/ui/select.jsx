@@ -82,7 +82,7 @@ export default function Select({ id, label, value, onChange, options, placeholde
         aria-activedescendant={activeId}
         onClick={() => (isOpen ? setIsOpen(false) : open())}
         onKeyDown={handleKeyDown}
-        className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-slate-300 bg-white px-3 text-left text-sm text-slate-900 transition-colors hover:border-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+        className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-slate-300 bg-white px-3 text-left text-sm text-slate-900 transition-colors hover:border-slate-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-100"
       >
         <span className={`truncate ${value ? "" : "text-slate-400"}`}>{selectedLabel}</span>
         <ChevronDown
@@ -111,11 +111,11 @@ export default function Select({ id, label, value, onChange, options, placeholde
                 onClick={() => choose(index)}
                 onMouseEnter={() => setActiveIndex(index)}
                 className={`flex min-h-10 cursor-pointer items-center justify-between gap-2 rounded-lg px-3 text-sm ${
-                  isActive ? "bg-blue-50 text-blue-900" : "text-slate-700"
+                  isActive ? "bg-violet-50 text-violet-900" : "text-slate-700"
                 } ${item === "" ? "text-slate-400" : ""}`}
               >
                 <span className="truncate">{item === "" ? placeholder : item}</span>
-                {isSelected && item !== "" ? <Check className="h-4 w-4 shrink-0 text-blue-600" aria-hidden="true" /> : null}
+                {isSelected && item !== "" ? <Check className="h-4 w-4 shrink-0 text-violet-600" aria-hidden="true" /> : null}
               </li>
             );
           })}

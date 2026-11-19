@@ -28,7 +28,7 @@ export default async function TicketDetailsPage({ params }) {
       <PageHeader title={ticket.ticket_number} subtitle={ticket.subject} />
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8">
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-          <Link href="/tickets" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+          <Link href="/tickets" className="text-sm font-medium text-violet-600 hover:text-violet-800">
             ← Back to All Tickets
           </Link>
           <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
