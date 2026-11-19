@@ -20,7 +20,7 @@ const EMPTY_FORM = {
 
 // Used for both "New Ticket" and "Edit Ticket". `initialValues` pre-fills the edit form.
 // Without ticketId it creates a ticket; with ticketId it updates that ticket. Both save to Supabase.
-export default function TicketForm({ ticketId, initialValues, cancelHref, submitLabel }) {
+export default function TicketForm({ ticketId, initialValues, cancelHref, onCancel, onSaved, submitLabel }) {
   const router = useRouter();
   const [form, setForm] = useState({ ...EMPTY_FORM, ...initialValues });
   const [errors, setErrors] = useState({});
@@ -58,11 +58,18 @@ export default function TicketForm({ ticketId, initialValues, cancelHref, submit
       if (ticketId) {
         await updateTicket(ticketId, payload);
         router.push(`/tickets/${ticketId}`);
+        router.refresh();
       } else {
         const ticket = await createTicket(payload);
-        router.push(`/tickets/${ticket.id}`);
+        if (onSaved) {
+          // Inside the modal: close it and refresh the list the user is looking at.
+          onSaved(ticket);
+          router.refresh();
+        } else {
+          router.push(`/tickets/${ticket.id}`);
+          router.refresh();
+        }
       }
-      router.refresh();
     } catch (err) {
       setSaveError(err.message);
       setIsSaving(false);
@@ -121,9 +128,15 @@ export default function TicketForm({ ticketId, initialValues, cancelHref, submit
       </fieldset>
 
       <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:justify-end">
-        <Link href={cancelHref} className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
-          Cancel
-        </Link>
+        {onCancel ? (
+          <button type="button" onClick={onCancel} className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
+            Cancel
+          </button>
+        ) : (
+          <Link href={cancelHref} className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
+            Cancel
+          </Link>
+        )}
         <button type="submit" disabled={isSaving} className="rounded-lg bg-violet-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 disabled:opacity-60">
           {isSaving ? "Saving..." : submitLabel}
         </button>

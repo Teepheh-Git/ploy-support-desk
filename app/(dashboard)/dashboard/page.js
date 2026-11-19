@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { connection } from "next/server";
-import { CircleDot, Clock, CheckCircle2, Ticket, Plus, ArrowRight } from "lucide-react";
+import { CircleDot, Clock, CheckCircle2, Ticket, ArrowRight } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import StatCard from "@/components/dashboard/stat-card";
 import TicketTable from "@/components/tickets/ticket-table";
 import EmptyState from "@/components/tickets/empty-state";
+import CreateTicketButton from "@/components/tickets/create-ticket-button";
 import { getCurrentUser } from "@/lib/current-user";
 import { listTicketsOnServer } from "@/lib/tickets-server";
 
@@ -15,16 +16,7 @@ export default function DashboardPage() {
     <>
       <PageHeader
         title="Dashboard"
-        action={
-          <Link
-            href="/tickets/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700"
-          >
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">Create Ticket</span>
-            <span className="sm:hidden">New</span>
-          </Link>
-        }
+        action={<CreateTicketButton />}
       />
       <Suspense fallback={<DashboardSkeleton />}>
         <DashboardContent />
@@ -133,7 +125,7 @@ async function DashboardContent() {
             </Link>
           </div>
           {recentTickets.length === 0 ? (
-            <EmptyState title="No tickets yet" message="Register the first customer complaint to see it here." actionHref="/tickets/new" actionLabel="Create Ticket" />
+            <EmptyState title="No tickets yet" message="Register the first customer complaint to see it here." action={<CreateTicketButton />} />
           ) : (
             <TicketTable tickets={recentTickets} />
           )}

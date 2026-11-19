@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import Sidebar from "@/components/layout/sidebar";
 import { UserProvider } from "@/components/layout/user-context";
+import { CreateTicketProvider } from "@/components/tickets/create-ticket-context";
 import { getCurrentUser } from "@/lib/current-user";
 
 // Every page inside (dashboard) gets this shell: a fixed sidebar on desktop
@@ -24,12 +25,14 @@ async function Shell({ children }) {
 
   return (
     <UserProvider user={user}>
-      <div className="min-h-screen bg-slate-50/60">
-        <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white md:block">
-          <Sidebar />
-        </aside>
-        <div className="flex min-h-screen min-w-0 flex-col md:pl-64">{children}</div>
-      </div>
+      <CreateTicketProvider>
+        <div className="min-h-screen bg-slate-50/60">
+          <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white md:block">
+            <Sidebar />
+          </aside>
+          <div className="flex min-h-screen min-w-0 flex-col md:pl-64">{children}</div>
+        </div>
+      </CreateTicketProvider>
     </UserProvider>
   );
 }

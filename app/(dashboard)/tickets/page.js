@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import TicketTable from "@/components/tickets/ticket-table";
 import TicketFilters from "@/components/tickets/ticket-filters";
 import EmptyState from "@/components/tickets/empty-state";
+import CreateTicketButton from "@/components/tickets/create-ticket-button";
 import { listTickets } from "@/lib/tickets";
 
 const NO_FILTERS = { search: "", status: "", priority: "", category: "" };
@@ -43,13 +43,7 @@ export default function AllTicketsPage() {
       <PageHeader
         title="All Tickets"
         subtitle={`${visibleTickets.length} of ${mockTickets.length} tickets shown`}
-        action={
-          <Link href="/tickets/new" className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">Create Ticket</span>
-            <span className="sm:hidden">New</span>
-          </Link>
-        }
+        action={<CreateTicketButton />}
       />
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8">
         <section aria-label="Search and filter tickets">
@@ -64,8 +58,7 @@ export default function AllTicketsPage() {
           <EmptyState
             title={mockTickets.length === 0 ? "No tickets yet" : "No matching tickets"}
             message={mockTickets.length === 0 ? "Register the first customer complaint to start tracking it." : "Try a different search or clear the filters."}
-            actionHref={mockTickets.length === 0 ? "/tickets/new" : undefined}
-            actionLabel="Create Ticket"
+            action={mockTickets.length === 0 ? <CreateTicketButton /> : undefined}
           />
         ) : (
           <TicketTable tickets={visibleTickets} showCategory />
