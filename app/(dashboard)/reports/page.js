@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { connection } from "next/server";
 import PageHeader from "@/components/layout/page-header";
 import StatCard from "@/components/dashboard/stat-card";
@@ -24,8 +25,34 @@ function percent(count, total) {
   return total === 0 ? 0 : Math.round((count / total) * 100);
 }
 
-export default async function ReportsPage() {
-  // Signed-in data is read per request, so Next.js must not prerender this page.
+export default function ReportsPage() {
+  return (
+    <>
+      <PageHeader title="Reports" subtitle="A summary of every complaint on record" />
+      <Suspense fallback={<ReportsSkeleton />}>
+        <ReportsContent />
+      </Suspense>
+    </>
+  );
+}
+
+// Placeholder shown while the signed-in data loads.
+function ReportsSkeleton() {
+  return (
+    <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8" aria-busy="true">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="h-28 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+        ))}
+      </div>
+      <div className="h-96 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+    </main>
+  );
+}
+
+// Reads signed-in data on each request and renders the report body.
+async function ReportsContent() {
+  // Signed-in data is read per request, so Next.js must not prerender this part.
   await connection();
   const tickets = await listTicketsOnServer();
   const total = tickets.length;
@@ -34,8 +61,6 @@ export default async function ReportsPage() {
   const statusCount = (status) => byStatus.find((item) => item.label === status).count;
 
   return (
-    <>
-      <PageHeader title="Reports" subtitle="A summary of every complaint on record" />
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8">
         <section aria-label="Key figures" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard label="Total Complaints" value={total} />
@@ -108,6 +133,5 @@ export default async function ReportsPage() {
           </section>
         </div>
       </main>
-    </>
   );
 }
