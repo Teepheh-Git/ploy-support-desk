@@ -1,5 +1,5 @@
+import { Suspense } from "react";
 import Link from "next/link";
-import { connection } from "next/server";
 import { CircleDot, Clock, CheckCircle2, Ticket, Plus, ArrowRight } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import StatCard from "@/components/dashboard/stat-card";
@@ -9,9 +9,46 @@ import { getCurrentUser } from "@/lib/current-user";
 import { listTicketsOnServer } from "@/lib/tickets-server";
 
 
-export default async function DashboardPage() {
-  // Signed-in data is read per request, so Next.js must not prerender this page.
-  await connection();
+export default function DashboardPage() {
+  return (
+    <>
+      <PageHeader
+        title="Dashboard"
+        action={
+          <Link
+            href="/tickets/new"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700"
+          >
+            <Plus className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden sm:inline">Create Ticket</span>
+            <span className="sm:hidden">New</span>
+          </Link>
+        }
+      />
+      <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardContent />
+      </Suspense>
+    </>
+  );
+}
+
+// Placeholder shown while the signed-in data loads, so the page header appears straight away.
+function DashboardSkeleton() {
+  return (
+    <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8" aria-busy="true">
+      <div className="h-44 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="h-28 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+        ))}
+      </div>
+      <div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm" />
+    </main>
+  );
+}
+
+// Reads signed-in data on each request and renders the dashboard body.
+async function DashboardContent() {
   const [user, tickets] = await Promise.all([getCurrentUser(), listTicketsOnServer()]);
   const total = tickets.length;
   const open = tickets.filter((t) => t.status === "Open").length;
@@ -33,20 +70,6 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <>
-      <PageHeader
-        title="Dashboard"
-        action={
-          <Link
-            href="/tickets/new"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700"
-          >
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">Create Ticket</span>
-            <span className="sm:hidden">New</span>
-          </Link>
-        }
-      />
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8">
         <section className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 lg:grid-cols-5">
           <div className="flex flex-col justify-between gap-4 lg:col-span-2">
@@ -114,6 +137,5 @@ export default async function DashboardPage() {
           )}
         </section>
       </main>
-    </>
   );
 }
