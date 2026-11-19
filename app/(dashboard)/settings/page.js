@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { LogOut, Mail, Pencil, ShieldCheck, UserRound } from "lucide-react";
+import { Mail, Pencil, ShieldCheck, UserRound } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import { useCurrentUser } from "@/components/layout/user-context";
-import ConfirmDialog from "@/components/ui/confirm-dialog";
-import { signOut, updateProfile } from "@/app/auth-actions";
+import { updateProfile } from "@/app/auth-actions";
 
 // Shows the signed-in user's profile from Supabase Auth, saves name changes and logs out.
 export default function SettingsPage() {
@@ -17,8 +16,6 @@ export default function SettingsPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
-  const [isConfirmingLogout, setIsConfirmingLogout] = useState(false);
-  const [isLoggingOut, startLogout] = useTransition();
 
   function startEditing() {
     setMessage("");
@@ -163,32 +160,6 @@ export default function SettingsPage() {
               </form>
             ) : null}
           </div>
-        </section>
-
-        <section aria-labelledby="account-heading" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-          <h2 id="account-heading" className="text-base font-semibold text-slate-900">
-            Session
-          </h2>
-          <p className="mt-1 mb-4 text-sm text-slate-500">Sign out of the Ploy Support Desk on this device.</p>
-          <button
-            type="button"
-            onClick={() => setIsConfirmingLogout(true)}
-            className="inline-flex items-center gap-2 rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
-          >
-            <LogOut className="h-4 w-4" aria-hidden="true" />
-            Log out
-          </button>
-          <ConfirmDialog
-            open={isConfirmingLogout}
-            icon={LogOut}
-            title="Log out of Ploy Support Desk?"
-            description="You will need to sign in again to access tickets on this device."
-            confirmLabel="Log out"
-            pendingLabel="Logging out..."
-            isPending={isLoggingOut}
-            onConfirm={() => startLogout(() => signOut())}
-            onCancel={() => setIsConfirmingLogout(false)}
-          />
         </section>
       </main>
     </>

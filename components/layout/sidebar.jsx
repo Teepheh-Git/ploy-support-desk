@@ -2,15 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useTransition } from "react";
 import {
   LayoutDashboard,
   Ticket,
   BarChart3,
   Settings,
   LifeBuoy,
+  LogOut,
   User,
 } from "lucide-react";
 import { useCurrentUser } from "@/components/layout/user-context";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+import { signOut } from "@/app/auth-actions";
 
 // The only five navigation links the PRD asks for.
 export const NAV_LINKS = [
@@ -25,6 +29,8 @@ export const NAV_LINKS = [
 export default function Sidebar({ onNavigate }) {
   const pathname = usePathname();
   const user = useCurrentUser();
+  const [isConfirmingLogout, setIsConfirmingLogout] = useState(false);
+  const [isLoggingOut, startLogout] = useTransition();
 
   const initials = (user?.full_name || "")
     .split(" ")
@@ -89,6 +95,25 @@ export default function Sidebar({ onNavigate }) {
             <p className="truncate text-xs text-slate-500">{user?.email}</p>
           </div>
         </div>
+        <button
+          type="button"
+          onClick={() => setIsConfirmingLogout(true)}
+          className="mt-3 inline-flex min-h-9 w-full items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-3 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+        >
+          <LogOut className="h-4 w-4" aria-hidden="true" />
+          Log out
+        </button>
+        <ConfirmDialog
+          open={isConfirmingLogout}
+          icon={LogOut}
+          title="Log out of Ploy Support Desk?"
+          description="You will need to sign in again to access tickets on this device."
+          confirmLabel="Log out"
+          pendingLabel="Logging out..."
+          isPending={isLoggingOut}
+          onConfirm={() => startLogout(() => signOut())}
+          onCancel={() => setIsConfirmingLogout(false)}
+        />
       </div>
     </div>
   );
