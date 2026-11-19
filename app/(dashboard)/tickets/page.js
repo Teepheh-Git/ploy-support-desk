@@ -44,7 +44,7 @@ export default function AllTicketsPage() {
         title="All Tickets"
         subtitle={`${visibleTickets.length} of ${mockTickets.length} tickets shown`}
         action={
-          <Link href="/tickets/new" className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700">
+          <Link href="/tickets/new" className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm shadow-blue-600/20 transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
             <Plus className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">Create Ticket</span>
             <span className="sm:hidden">New</span>
@@ -52,13 +52,14 @@ export default function AllTicketsPage() {
         }
       />
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-8">
-
-        <TicketFilters filters={filters} onChange={setFilters} />
+        <section aria-label="Search and filter tickets">
+          <TicketFilters filters={filters} onChange={setFilters} />
+        </section>
 
         {loadError ? (
-          <p role="alert" className="rounded-lg bg-rose-50 px-4 py-3 text-sm text-rose-700">{loadError}</p>
+          <p role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{loadError}</p>
         ) : isLoading ? (
-          <p className="text-sm text-slate-500">Loading tickets...</p>
+          <p role="status" className="rounded-2xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500 shadow-sm">Loading tickets...</p>
         ) : visibleTickets.length === 0 ? (
           <EmptyState
             title={mockTickets.length === 0 ? "No tickets yet" : "No matching tickets"}
