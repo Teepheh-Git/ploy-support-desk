@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { connection } from "next/server";
 import { CircleDot, Clock, CheckCircle2, Ticket, Plus, ArrowRight } from "lucide-react";
 import PageHeader from "@/components/layout/page-header";
 import StatCard from "@/components/dashboard/stat-card";
@@ -49,6 +50,7 @@ function DashboardSkeleton() {
 
 // Reads signed-in data on each request and renders the dashboard body.
 async function DashboardContent() {
+  await connection();
   const [user, tickets] = await Promise.all([getCurrentUser(), listTicketsOnServer()]);
   const total = tickets.length;
   const open = tickets.filter((t) => t.status === "Open").length;
